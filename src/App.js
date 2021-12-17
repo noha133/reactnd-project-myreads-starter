@@ -1,6 +1,9 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
+import Allbooks from './Components/Allbooks'
 import './App.css'
+import Search from './Components/Search'
+
 
 class BooksApp extends React.Component {
   state = {
@@ -10,41 +13,50 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false
+    showSearchPage: false,
+  
   }
 
+  // componentDidMount(){
+  //   BooksAPI.getAll()
+  //     .then((books)=>{
+  //       this.setState(()=>({
+  //         books
+  //       }))
+  //     })
+  // }
+ 
   render() {
+    const {books}=this.state
     return (
+    
       <div className="app">
         {this.state.showSearchPage ? (
           <div className="search-books">
             <div className="search-books-bar">
               <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
-              <div className="search-books-input-wrapper">
-                {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
+              {/* <div className="search-books-input-wrapper">
+       
+                <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={(event)=>this.updatequery()}/>
 
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-                <input type="text" placeholder="Search by title or author"/>
-
-              </div>
+              </div> */}
+            
             </div>
-            <div className="search-books-results">
+            <Search />
+            {/* <div className="search-books-results">
               <ol className="books-grid"></ol>
-            </div>
+            </div> */}
           </div>
         ) : (
           <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
-            <div className="list-books-content">
-              <div>
-                <div className="bookshelf">
+            <Allbooks  /> 
+            {/* {books.map(book => <div key={book.id} className="book-cover" style={{ width: 128, height: 174, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>)} */}
+            {/* <div className="list-books-content"> */}
+              {/* <div> */}
+                 {/*<div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
@@ -86,8 +98,8 @@ class BooksApp extends React.Component {
                       </li>
                     </ol>
                   </div>
-                </div>
-                <div className="bookshelf">
+                </div> */}
+                {/* <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
@@ -155,6 +167,7 @@ class BooksApp extends React.Component {
                       <li>
                         <div className="book">
                           <div className="book-top">
+                            
                             <div className="book-cover" style={{ width: 128, height: 174, backgroundImage: 'url("http://books.google.com/books/content?id=1q_xAwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE712CA0cBYP8VKbEcIVEuFJRdX1k30rjLM29Y-dw_qU1urEZ2cQ42La3Jkw6KmzMmXIoLTr50SWTpw6VOGq1leINsnTdLc_S5a5sn9Hao2t5YT7Ax1RqtQDiPNHIyXP46Rrw3aL8&source=gbs_api")' }}></div>
                             <div className="book-shelf-changer">
                               <select>
@@ -190,17 +203,27 @@ class BooksApp extends React.Component {
                       </li>
                     </ol>
                   </div>
-                </div>
-              </div>
-            </div>
+                </div> */}
+              {/* </div> */}
+            {/* </div> */}
             <div className="open-search">
               <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
             </div>
           </div>
         )}
+        			
+              
       </div>
     )
   }
 }
 
 export default BooksApp
+         {/*
+                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
+                  You can find these search terms here:
+                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
+
+                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
+                  you don't find a specific author or title. Every search is limited by search terms.
+                */}
