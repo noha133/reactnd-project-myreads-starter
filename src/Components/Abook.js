@@ -18,10 +18,10 @@ class Abook extends React.Component {
     
     render() {   
     const {book,shelf,changeShelf}=this.props
-    // const shelf = book.shelf
+ 
     const { selectedOption } = this.state;
     return <div className="list-books-content">
-       {/* value={book['shelf']?book['shelf']:'none'} */}
+      
                   <div className="book">
                     <div className="book-top">
                       <div className="book-cover" style={{ width: 128, height: 193, backgroundImage:`url(${book.imageLinks.smallThumbnail})` }} />

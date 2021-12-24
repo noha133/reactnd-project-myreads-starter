@@ -43,19 +43,9 @@ class Search extends React.Component {
       }
       removeshelf = (book,shelf) => {
         this.setState({ shelf });
-        // BooksAPI.update(book,shelf)
+      
         BooksAPI.update(book, shelf)
            book.shelf = shelf;
-        //   this.setState(state => ({
-        //     books: state.books.filter(object => object.id !== book.id).concat([book])
-        //   }));
-        // });
-        // BooksAPI.getAll()
-        // .then((books)=>{
-        //   this.setState(()=>({
-        //     books
-        //   }))
-        // })
         
       
         
