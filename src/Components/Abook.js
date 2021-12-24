@@ -9,46 +9,24 @@ class Abook extends React.Component {
   };
   handleChange = (book,selectedOption)=> {
     this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
-    // BooksAPI.update(book,selectedOption)
-    // .then((selectedOption )=>{
-    //   this.setState({ selectedOption });
-    // })
+    
+    
   };
   
-  // componentDidMount(){
-  //   BooksAPI.update(book,book.shelf)
-  //     .then((books)=>{
-  //       this.setState(()=>({
-  //         books
-  //       }))
-  //     })
-  // }
-  // changeShelf = (book, shelf) => {
 
-  //   // check if search results already exist in booklist
-
-  //   BooksAPI.update(book, shelf).then(response => {
-  //     book.shelf = shelf
-  //     this.setState((state) => ({
-  //       books: this.state.books.filter((b) => b.id !== book.id).concat([ book ])
-  //     }))
-  //   })
-  // }
-  
       
     
     render() {   
-    const {book,changeShelf}=this.props
-    const shelf = book.shelf
+    const {book,shelf,changeShelf}=this.props
+    // const shelf = book.shelf
     const { selectedOption } = this.state;
     return <div className="list-books-content">
-       
+       {/* value={book['shelf']?book['shelf']:'none'} */}
                   <div className="book">
                     <div className="book-top">
                       <div className="book-cover" style={{ width: 128, height: 193, backgroundImage:`url(${book.imageLinks.smallThumbnail})` }} />
                       <div className="book-shelf-changer">
-                        <select value={this.selectedOption}
+                        <select value={shelf?shelf:'Read'}
         onChange={(event) => changeShelf(book, event.target.value)}
      >
                           <option value="move" disabled>

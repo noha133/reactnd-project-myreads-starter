@@ -1,11 +1,13 @@
 import React,{Component} from 'react'
+import { Link } from 'react-router-dom'
 import * as BooksAPI from '../BooksAPI'
 import Abook from './Abook'
 
 
 class Allbooks extends React.Component {
     state = {
-        books: []
+        books: [],
+        shelf: null,
       }
       componentDidMount(){
         BooksAPI.getAll()
@@ -15,18 +17,9 @@ class Allbooks extends React.Component {
             }))
           })
       }
-      // changeShelf = (book, shelf) => {
-
-      //   // check if search results already exist in booklist
-    
-      //   BooksAPI.update(book, shelf).then(response => {
-      //     book.shelf = shelf
-      //     this.setState((state) => ({
-      //       books: this.state.books.filter((b) => b.id !== book.id).concat([ book ])
-      //     }))
-      //   })
-      // }
+  
       removeshelf = (book,shelf) => {
+        this.setState({ shelf });
         this.setState((currentState) => ({
           books: currentState.books.filter((c) => {
             return c.id !== book.id
@@ -42,21 +35,15 @@ class Allbooks extends React.Component {
           }))
         })
       }
-      // changeShelf = (book, shelf) => {
-
-      //   // check if search results already exist in booklist
-    
-      //   BooksAPI.update(book, shelf).then(response => {
-      //     book.shelf = shelf
-      //     this.setState((state) => ({
-      //       books: this.state.books.filter((b) => b.id !== book.id)
-      //     }))
-      //   })
-      // }
+ 
     
     render() {
     const {books}=this.state
     return (
+      <div className="list-books">
+            <div className="list-books-title">
+              <h1>MyReads</h1>
+            </div>
       <div className="list-books-content">
       <div>
       <div className="bookshelf">
@@ -64,7 +51,7 @@ class Allbooks extends React.Component {
         <div className="bookshelf-books">
           <ol className="books-grid">
            
-        {books.filter(bookl => bookl.shelf === 'currentlyReading').map(book => <li key={book.id}> <Abook book={book} changeShelf={this.removeshelf} ></Abook> </li>)}
+        {books.filter(bookl => bookl.shelf === 'currentlyReading').map(book => <li key={book.id}> <Abook book={book} shelf={book.shelf} changeShelf={this.removeshelf} ></Abook> </li>)}
         
           </ol>
         </div>
@@ -73,7 +60,7 @@ class Allbooks extends React.Component {
           <h2 className="bookshelf-title">Want to Read</h2>
               <div className="bookshelf-books">
                   <ol className="books-grid">
-                  {books.filter(bookl => bookl.shelf === 'wantToRead').map(book => <li key={book.id}> <Abook book={book} changeShelf={this.removeshelf} ></Abook> </li>)} 
+                  {books.filter(bookl => bookl.shelf === 'wantToRead').map(book => <li key={book.id}> <Abook book={book} shelf={book.shelf} changeShelf={this.removeshelf} ></Abook> </li>)} 
                   </ol>
         </div>
       </div>
@@ -81,11 +68,15 @@ class Allbooks extends React.Component {
           <h2 className="bookshelf-title">Read</h2>
               <div className="bookshelf-books">
                   <ol className="books-grid">
-                  {books.filter(bookl => bookl.shelf === 'read').map(book => <li key={book.id}> <Abook book={book} changeShelf={this.removeshelf} ></Abook> </li>)} 
+                  {books.filter(bookl => bookl.shelf === 'read').map(book => <li key={book.id}> <Abook book={book} shelf={book.shelf} changeShelf={this.removeshelf} ></Abook> </li>)} 
                   </ol>
         </div>
       </div>
       </div>
+      </div>
+       <div className="open-search">
+              <Link to="/search"> <button >Add a book</button></Link>
+             </div>
       </div>
     )}
 

@@ -1,4 +1,5 @@
 import React,{Component} from 'react'
+import { Link } from 'react-router-dom'
 import * as BooksAPI from '../BooksAPI'
 import Abook from './Abook'
 
@@ -7,37 +8,68 @@ class Search extends React.Component {
     state = {
         books: [],
         query: '',
+        loading: false,
+        shelf: '',
+        Allbooks: [],
       }
-    //   componentDidMount(){
-    //     BooksAPI.getAll()
-    //       .then((books)=>{
-    //         this.setState(()=>({
-    //           books
-    //         }))
-    //       })
-    //   }
+
       updatequery = (query) =>{
         this.setState(()=>({
             query: query.trim()
         }))
-    
+        BooksAPI.getAll()
+        .then((Allbooks)=>{
+          this.setState(()=>({
+            Allbooks
+          }))
+        })
         BooksAPI.search(query)
           .then((books)=>{
             this.setState(()=>({
               books
             }))
+            
           })
+         
+          
+          .catch((err) => {
+            console.log(err);
+          })
+          .finally(() => {
+            this.setState({ loading: true })
+          });
+          
+          
       }
+      removeshelf = (book,shelf) => {
+        this.setState({ shelf });
+        // BooksAPI.update(book,shelf)
+        BooksAPI.update(book, shelf)
+           book.shelf = shelf;
+        //   this.setState(state => ({
+        //     books: state.books.filter(object => object.id !== book.id).concat([book])
+        //   }));
+        // });
+        // BooksAPI.getAll()
+        // .then((books)=>{
+        //   this.setState(()=>({
+        //     books
+        //   }))
+        // })
+        
+      
+        
+      }
+ 
   
     
     render() {
-    const {books,query}=this.state
-    // const showingBooks = query === ''
-    // ? books
-    // : books.filter((c) => (
-    //     c.title.toLowerCase().includes(query.toLowerCase())
-    //   ))
+    const {books,query,loading,shelf}=this.state
+    
     return (
+      <div className="search-books">
+      <div className="search-books-bar">
+      <Link to="/"> <button className="close-search" >Close</button></Link>
         <div>
         <div className="search-books-input-wrapper">
        
@@ -47,10 +79,13 @@ class Search extends React.Component {
        <div className="search-books-results">
       
        <ol className="books-grid"> 
-       {books.map(book => <li key={book.id}> <Abook book={book} ></Abook> </li>)} 
+       {loading && books.map(book => <li key={book.id}> <Abook book={book} shelf={book.shelf} changeShelf={this.removeshelf}></Abook> </li>)} 
        </ol>
      </div>
      </div>
+     </div>
+           
+           </div>
      
     )}
 
