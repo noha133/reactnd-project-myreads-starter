@@ -20,21 +20,25 @@ class Allbooks extends React.Component {
   
       removeshelf = (book,shelf) => {
         this.setState({ shelf });
-        this.setState((currentState) => ({
-          books: currentState.books.filter((c) => {
-            return c.id !== book.id
-          })
+        BooksAPI.update(book,shelf)
+        book.shelf = shelf;
+        this.setState(currentState => ({
+          books: currentState.books.filter(c =>  c.id !== book.id.concat(book)
+           )
         
         }))
-        BooksAPI.update(book,shelf)
-        alert(shelf)
-        BooksAPI.getAll()
-        .then((books)=>{
-          this.setState(()=>({
-            books
-          }))
-        })
+
+        // , () => { BooksAPI.update(book,shelf)}, () =>{      BooksAPI.getAll()
+        //   .then((books)=>{
+        //     this.setState(()=>({
+        //       books
+        //     }))
+        //   })})
+         
       }
+       // this.setState(prevState => ({
+          //   myBooks: prevState.myBooks.filter(b => b.id !== book.id).concat(book)
+          // }));
  
     
     render() {

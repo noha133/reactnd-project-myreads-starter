@@ -5,6 +5,7 @@ import Abook from './Abook'
 
 
 class Search extends React.Component {
+ 
     state = {
         books: [],
         query: '',
@@ -12,10 +13,12 @@ class Search extends React.Component {
         shelf: '',
         Allbooks: [],
       }
+      // this.changeBookShelf = this.changeBookShelf(this);
+  
 
       updatequery = (query) =>{
         this.setState(()=>({
-            query: query.trim()
+            query: query
         }))
         BooksAPI.getAll()
         .then((Allbooks)=>{
@@ -23,24 +26,42 @@ class Search extends React.Component {
             Allbooks
           }))
         })
+        if (query.length !== 0) {
         BooksAPI.search(query)
+        
           .then((books)=>{
+            if (books.length > 0){
+            books.map(book => {
+              var shelfBook = this.state.Allbooks.filter(b=>b.id === book.id);
+              book.shelf = shelfBook && shelfBook.length === 1 ? shelfBook[0].shelf : 'none';
+              return book;
+          });
             this.setState(()=>({
               books
             }))
-            
+          }
+     
           })
-         
+        }
+      
+        else{
+          this.setState({books: [], query: ''})
+        }
+        
+    
+       
+      
           
-          .catch((err) => {
-            console.log(err);
-          })
-          .finally(() => {
-            this.setState({ loading: true })
-          });
+          // .catch((err) => {
+          //   console.log(err);
+          // })
+          // .finally(() => {
+          //   this.setState({ loading: true })
+          // });
           
           
       }
+ 
       removeshelf = (book,shelf) => {
         this.setState({ shelf });
       
@@ -54,7 +75,7 @@ class Search extends React.Component {
   
     
     render() {
-    const {books,query,loading,shelf}=this.state
+    const {books,query,shelf}=this.state
     
     return (
       <div className="search-books">
@@ -69,7 +90,7 @@ class Search extends React.Component {
        <div className="search-books-results">
       
        <ol className="books-grid"> 
-       {loading && books.map(book => <li key={book.id}> <Abook book={book} shelf={book.shelf} changeShelf={this.removeshelf}></Abook> </li>)} 
+       { books.length ? books.map(book => <li key={book.id}> <Abook book={book} shelf={book.shelf} changeShelf={this.removeshelf}></Abook> </li>):null} 
        </ol>
      </div>
      </div>
