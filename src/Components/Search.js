@@ -13,7 +13,7 @@ class Search extends React.Component {
         shelf: '',
         Allbooks: [],
       }
-      // this.changeBookShelf = this.changeBookShelf(this);
+ 
   
 
       updatequery = (query) =>{
@@ -107,50 +107,3 @@ class Search extends React.Component {
 export default Search
 
 
-// async updatequery (query) {
-     
-//   this.setState(()=>({
-//       query: query
-//   }))
-  
-//   // const books = await BooksAPI.search(query)
-//   BooksAPI.getAll()
-//   .then((Allbooks)=>{
-//     this.setState(()=>({
-//       Allbooks
-//     }))
-//   })
-//   if (query.length !== 0) {
-//   // BooksAPI.search(query)
-//   alert(query)
-//   const books = await BooksAPI.search(query);
-//   if (books) {
-//     alert("hi1")
-//       if (books.length > 0){
-//         alert("hi2")
-//       books.map(book => {
-//         var shelfBook = this.state.Allbooks.filter(b=>b.id === book.id);
-//         book.shelf = shelfBook && shelfBook.length === 1 ? shelfBook[0].shelf : 'none';
-        
-//         return book;
-        
-//     });
-//       this.setState(()=>({
-//         books
-//       }))
-//     }}else {
-//       this.setState(() => ({ books: [] }));
-//       alert("hi")
-//     }
-//     // else {
-//     //   this.setState(() => ({books: [] }));
-//     // }
-   
-
-    
-//   }
-  
-
-//   else{
-//     this.setState({query: query.trim(),books: [], })
-//   }
